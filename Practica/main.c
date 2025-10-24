@@ -137,6 +137,13 @@ void *monitor_deadlock(void *arg) {
     return NULL;
 }
 
+void print_summary() {
+    safe_print("\n--- RESUMEN DE COMIDAS ---\n");
+    for (int i = 0; i < N; i++) {
+        safe_print("Filósofo %d : %d comidas\n", i, total_comidas[i]);
+    }
+}
+
 //CONFIGURAMOS LOS ESCENARIOS DESDE CONSOLA.
 void configurar_escenario(int escenario) {
     switch (escenario) {
