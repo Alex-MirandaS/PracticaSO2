@@ -52,22 +52,22 @@ void *filosofo_naive(void *arg) {
     while (time(NULL) < end_time) {
         long tthink = rand_range(100000, 900000);
         msleep(tthink);
-        safe_print("[P%d] Quiere comer. Pensó %ld us.\n", id, tthink);
+        safe_print("[Filosofo%d] Quiere comer. Pensó %ld us.\n", id, tthink);
 
         sem_wait(&tenedores[left]);
         holding_left[id] = 1;
-        safe_print("[P%d] Tomó tenedor IZQ (%d).\n", id, left);
+        safe_print("[Filosofo%d] Tomó tenedor IZQ (%d).\n", id, left);
 
         while (time(NULL) < end_time) {
             if (sem_trywait(&tenedores[right]) == 0) {
                 holding_left[id] = 0;
                 filosofos_comiendo[id] = 1;
                 total_comidas[id]++;
-                safe_print("[P%d] Tomó tenedor DER (%d). COMIENDO (total=%d)\n", id, right, total_comidas[id]);
+                safe_print("[Filosofo%d] Tomó tenedor DER (%d). COMIENDO (total=%d)\n", id, right, total_comidas[id]);
                 long te = rand_range(2000000, 3000000);
                 msleep(te);
                 filosofos_comiendo[id] = 0;
-                safe_print("[P%d] Terminó de comer (%ld us).\n", id, te);
+                safe_print("[Filosofo%d] Terminó de comer (%ld us).\n", id, te);
                 sem_post(&tenedores[right]);
                 sem_post(&tenedores[left]);
                 break;
@@ -94,7 +94,7 @@ void *filosofo_limit(void *arg) {
     while (time(NULL) < end_time) {
         long tthink = rand_range(TIEMPO_PENSAR_MIN, TIEMPO_PENSAR_MAX);
         msleep(tthink);
-        safe_print("[P%d] Quiere comer. Pensó %ld us.\n", id, tthink);
+        safe_print("[Filosofo%d] Quiere comer. Pensó %ld us.\n", id, tthink);
 
         sem_wait(&comedor);
         sem_wait(&tenedores[left]);
@@ -102,11 +102,11 @@ void *filosofo_limit(void *arg) {
 
         filosofos_comiendo[id] = 1;
         total_comidas[id]++;
-        safe_print("[P%d] Tomó IZQ(%d) y DER(%d). COMIENDO (total=%d)\n", id, left, right, total_comidas[id]);
+        safe_print("[Filosofo%d] Tomó IZQ(%d) y DER(%d). COMIENDO (total=%d)\n", id, left, right, total_comidas[id]);
         long te = rand_range(TIEMPO_COMER_MIN, TIEMPO_COMER_MAX);
         msleep(te);
         filosofos_comiendo[id] = 0;
-        safe_print("[P%d] Terminó de comer (%ld us).\n", id, te);
+        safe_print("[Filosofo%d] Terminó de comer (%ld us).\n", id, te);
 
         sem_post(&tenedores[right]);
         sem_post(&tenedores[left]);
@@ -222,7 +222,7 @@ int main() {
         pthread_mutex_destroy(&mutex_print);
         return 0;
     }
-
+//Evalua el Escenario seleccionado desde consola
     if (escenario == 1) {
         N = 5;
         tenedores = malloc(sizeof(sem_t) * N);

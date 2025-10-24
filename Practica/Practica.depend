@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1761337998 source:/home/mordo/Documents/U/8vo Semestre/Sopes/Practica/Practica/main.c
+	<stdio.h>
+	<stdlib.h>
+	<pthread.h>
+	<semaphore.h>
+	<unistd.h>
+	<time.h>
+	<string.h>
+	<stdarg.h>
+
