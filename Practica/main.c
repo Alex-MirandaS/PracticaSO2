@@ -137,11 +137,42 @@ void *monitor_deadlock(void *arg) {
     return NULL;
 }
 
+//CONFIGURAMOS LOS ESCENARIOS DESDE CONSOLA.
+void configurar_escenario(int escenario) {
+    switch (escenario) {
+        case 1:
+            N = 5;
+            strcpy(mode, "naive");
+            printf("Escenario 1: Interbloqueo\n");
+            printf("Configuración: 5 filósofos, pensar <1s, comer 2-3s, duración 10s\n");
+            break;
+        case 2:
+            N = 5;
+            strcpy(mode, "limit");
+            printf("Escenario 2: Equidad\n");
+            printf("Configuración: 5 filósofos, pensar 1-2s, comer 0.5-1s, duración 60s\n");
+            break;
+        case 3:
+            N = 3;
+            strcpy(mode, "limit");
+            printf("Escenario 3: Robustez\n");
+            printf("Configuración: 3 filósofos, pensar 50-100ms, comer 100-300ms, duración 30s\n");
+            break;
+        case 4:
+            strcpy(mode, "limit");
+            printf("Escenario 4: Variables (2,7,12 filósofos), pensar y comer estándar, 20s cada uno\n");
+            break;
+        default:
+            printf("Escenario no válido.\n");
+            exit(1);
+    }
+}
 
 int main() {
     int escenario;
     printf("Seleccione el escenario (1-4): ");
     scanf("%d", &escenario);
+    configurar_escenario(escenario);
 
     srand(time(NULL));
     pthread_mutex_init(&mutex_print, NULL);
